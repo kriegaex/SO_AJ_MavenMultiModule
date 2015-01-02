@@ -1,0 +1,19 @@
+# Eclipse
+.settings/
+.classpath
+.project
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Maven
+target/
+
+# Other
+config.xml
+bin/
+*.jar
+*.zip
+*.xls
+*.xlsx
