@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.scrum-master.stackoverflow</groupId>
+		<artifactId>aspectj-multi-module</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>de.scrum-master.stackoverflow</groupId>
+	<artifactId>client-jar</artifactId>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- Build JAR of JARs containing all dependencies incl. AspectJ runtime -->
+				<groupId>org.dstovall</groupId>
+				<artifactId>onejar-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>de.scrum_master.app.Application</mainClass>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Execute application (main class is contained in JAR od JARs) -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<argument>-jar</argument>
+						<argument>${project.build.directory}/${project.build.finalName}.one-jar.${project.packaging}</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.scrum-master.stackoverflow</groupId>
+			<artifactId>data-objects-aspectj</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>

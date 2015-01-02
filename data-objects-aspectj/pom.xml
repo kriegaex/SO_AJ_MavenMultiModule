@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.scrum-master.stackoverflow</groupId>
+		<artifactId>aspectj-multi-module</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>de.scrum-master.stackoverflow</groupId>
+	<artifactId>data-objects-aspectj</artifactId>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- ATTENTION: This plugin needs something to compile (hence the dummy class in this module),
+				otherwise it will not run and post-compile weaving for other modules will not work. -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<configuration>
+					<weaveDependencies>
+						<weaveDependency>
+							<groupId>de.scrum-master.stackoverflow</groupId>
+							<artifactId>data-objects</artifactId>
+						</weaveDependency>
+						<weaveDependency>
+							<!-- Use aspect library as weave dependency in order to put it on the 'inpath'
+							rather than the 'aspectpath' (via 'aspectLibraries'), because we want the aspects
+							in the resulting artifact. Otherwise we would have to put the aspect module
+							on the classpath during runtime. -->
+							<groupId>de.scrum-master.stackoverflow</groupId>
+							<artifactId>aspect-javabean</artifactId>
+						</weaveDependency>
+						<weaveDependency>
+							<!-- Use aspect library as weave dependency (see explanation above) -->
+							<groupId>de.scrum-master.stackoverflow</groupId>
+							<artifactId>aspect-json</artifactId>
+						</weaveDependency>
+					</weaveDependencies>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<excludes>
+						<!-- Exclude dummy class (see comment on aspectj-maven-plugin above) from artifact -->
+						<exclude>**/Dummy.class</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.scrum-master.stackoverflow</groupId>
+			<artifactId>data-objects</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.scrum-master.stackoverflow</groupId>
+			<artifactId>aspect-javabean</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>de.scrum-master.stackoverflow</groupId>
+			<artifactId>aspect-json</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+</project>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>de.scrum-master.stackoverflow</groupId>
+		<artifactId>aspectj-multi-module</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>de.scrum-master.stackoverflow</groupId>
+	<artifactId>aspect-javabean</artifactId>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<configuration>
+					<aspectLibraries>
+						<aspectLibrary>
+							<!-- Abuse this setting for referring to application classes (needed to compile
+							ITD aspects referring to those classes) rather than using 'weaveDependencies'
+							because we do *not* want any woven application classes in our artifact at this point.
+							Later we will weave *multiple* aspect libraries into the application code at once
+							in module 'data-objects-aspectj'. -->
+							<groupId>de.scrum-master.stackoverflow</groupId>
+							<artifactId>data-objects</artifactId>
+						</aspectLibrary>
+					</aspectLibraries>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.scrum-master.stackoverflow</groupId>
+			<artifactId>data-objects</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>
