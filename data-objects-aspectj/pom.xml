@@ -11,6 +11,35 @@
 	<groupId>de.scrum-master.stackoverflow</groupId>
 	<artifactId>data-objects-aspectj</artifactId>
 
+	<properties>
+		<!-- Default value for 'artifactId' redundantly includes a 'weaveDependency'
+		which is present anyway, effectively making it a no-op -->
+		<aspect-javabean.artifactId>data-objects</aspect-javabean.artifactId>
+		<!-- No-op default, see comment above  -->
+		<aspect-json.artifactId>data-objects</aspect-json.artifactId>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>javabean</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<aspect-javabean.artifactId>aspect-javabean</aspect-javabean.artifactId>
+			</properties>
+		</profile>
+		<profile>
+			<id>json</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<aspect-json.artifactId>aspect-json</aspect-json.artifactId>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -30,12 +59,12 @@
 							in the resulting artifact. Otherwise we would have to put the aspect module
 							on the classpath during runtime. -->
 							<groupId>de.scrum-master.stackoverflow</groupId>
-							<artifactId>aspect-javabean</artifactId>
+							<artifactId>${aspect-javabean.artifactId}</artifactId>
 						</weaveDependency>
 						<weaveDependency>
 							<!-- Use aspect library as weave dependency (see explanation above) -->
 							<groupId>de.scrum-master.stackoverflow</groupId>
-							<artifactId>aspect-json</artifactId>
+							<artifactId>${aspect-json.artifactId}</artifactId>
 						</weaveDependency>
 					</weaveDependencies>
 				</configuration>
