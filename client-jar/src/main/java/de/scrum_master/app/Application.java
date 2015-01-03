@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
  * ITD aspects from modules 'aspect-javabean' and 'aspect-json'
  */
 public class Application {
-	public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+	public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
 		SampleObject sampleObject = new SampleObject("John Doe", 33);
 		System.out.println(sampleObject);
 
